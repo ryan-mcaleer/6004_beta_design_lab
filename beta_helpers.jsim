@@ -1,0 +1,21 @@
+.subckt signext16 literal[15:0] sext[31:0]
+    * Lower 16 bits pass through with buffers
+    Xbuf0_15 literal[15:0] sext[15:0] buffer
+    * Upper 16 bits = sign bit replicated
+    Xbuf16_31 literal[15]#16 sext[31:16] buffer
+.ends
+
+* 32-bit 2-way mux (for BSEL)
+.subckt mux2_32 sel a[31:0] b[31:0] out[31:0]
+    Xmux sel#32 a[31:0] b[31:0] out[31:0] mux2
+.ends
+
+* 32-bit 4-way mux (for WDSEL)
+.subckt mux4_32 sel[1:0] d0[31:0] d1[31:0] d2[31:0] d3[31:0] out[31:0]
+    Xmux sel[0]#32 sel[1]#32 d0[31:0] d1[31:0] d2[31:0] d3[31:0] out[31:0] mux4
+.ends
+
+* 32-bit buffer
+.subckt buffer_32 in[31:0] out[31:0]
+    Xbuf in[31:0] out[31:0] buffer
+.ends

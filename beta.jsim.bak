@@ -1,0 +1,91 @@
+.include "nominal.jsim"
+.include "stdcell.jsim"
+
+* Include your component files
+.include "program_counter.jsim"
+.include "register_file.jsim"
+.include "control_logic.jsim"
+.include "beta_helpers.jsim"
+.include "alu_wrapper.jsim"
+
+.subckt beta clk reset ia[31:0] id[31:0] ma[31:0] wrapper_out[31:0]
++ moe mrd[31:0] wr mwd[31:0]
+
+    * ========== INSTRUCTION FETCH ==========
+    Xpc clk reset ia[31:0] pc_plus4[31:0] pc
+    
+    * ========== DECODE INSTRUCTION FIELDS ==========
+    .connect opcode[5:0] id[31:26]
+    .connect rc[4:0] id[25:21]
+    .connect ra[4:0] id[20:16]
+    .connect rb[4:0] id[15:11]
+    .connect literal[15:0] id[15:0]
+    
+    * ========== CONTROL LOGIC ==========
+    Xctl reset opcode[5:0] ra2sel bsel alufn[5:0] wdsel[1:0] werf moe wr ctl
+    
+    * ========== REGISTER FILE ==========
+    Xregfile clk werf ra2sel ra[4:0] rb[4:0] rc[4:0]
+    + wdata[31:0] radata[31:0] rbdata[31:0] regfile
+    
+    * ========== DATAPATH ==========
+    
+    * Sign-extend the 16-bit literal to 32 bits
+    Xsext literal[15:0] sext_literal[31:0] signext16
+    
+    * BSEL mux: choose between rbdata (reg) or sign-extended literal
+    * BSEL=0 -> rbdata, BSEL=1 -> sext_literal
+    Xbsel_mux bsel rbdata[31:0] sext_literal[31:0] alu_b[31:0] mux2_32
+    
+    * ALU
+    Xalu alufn[5:0] radata[31:0] alu_b[31:0] wrapper_out[31:0] z v n alu32
+    
+    * ========== MEMORY INTERFACE ==========
+    * Memory address = ALU output
+    Xbufma wrapper_out[31:0] ma[31:0] buffer
+
+    * Memory write data = rbdata  
+    * Gate memory write data with wr
+    XandMWD0  rbdata[0]  wr mwd[0]  and2
+    XandMWD1  rbdata[1]  wr mwd[1]  and2
+    XandMWD2  rbdata[2]  wr mwd[2]  and2
+    XandMWD3  rbdata[3]  wr mwd[3]  and2
+    XandMWD4  rbdata[4]  wr mwd[4]  and2
+    XandMWD5  rbdata[5]  wr mwd[5]  and2
+    XandMWD6  rbdata[6]  wr mwd[6]  and2
+    XandMWD7  rbdata[7]  wr mwd[7]  and2
+    XandMWD8  rbdata[8]  wr mwd[8]  and2
+    XandMWD9  rbdata[9]  wr mwd[9]  and2
+    XandMWD10 rbdata[10] wr mwd[10] and2
+    XandMWD11 rbdata[11] wr mwd[11] and2
+    XandMWD12 rbdata[12] wr mwd[12] and2
+    XandMWD13 rbdata[13] wr mwd[13] and2
+    XandMWD14 rbdata[14] wr mwd[14] and2
+    XandMWD15 rbdata[15] wr mwd[15] and2
+    XandMWD16 rbdata[16] wr mwd[16] and2
+    XandMWD17 rbdata[17] wr mwd[17] and2
+    XandMWD18 rbdata[18] wr mwd[18] and2
+    XandMWD19 rbdata[19] wr mwd[19] and2
+    XandMWD20 rbdata[20] wr mwd[20] and2
+    XandMWD21 rbdata[21] wr mwd[21] and2
+    XandMWD22 rbdata[22] wr mwd[22] and2
+    XandMWD23 rbdata[23] wr mwd[23] and2
+    XandMWD24 rbdata[24] wr mwd[24] and2
+    XandMWD25 rbdata[25] wr mwd[25] and2
+    XandMWD26 rbdata[26] wr mwd[26] and2
+    XandMWD27 rbdata[27] wr mwd[27] and2
+    XandMWD28 rbdata[28] wr mwd[28] and2
+    XandMWD29 rbdata[29] wr mwd[29] and2
+    XandMWD30 rbdata[30] wr mwd[30] and2
+    XandMWD31 rbdata[31] wr mwd[31] and2
+
+    
+    * ========== WRITE-BACK ==========    
+    * WDSEL mux: choose data to write back to register
+    * WDSEL=00 -> PC+4, WDSEL=01 -> ALU output, WDSEL=10 -> memory read data
+    Xwdsel_mux wdsel[1:0] pc_plus4[31:0] wrapper_out[31:0] mrd[31:0] 0#32
+    + wdata[31:0] mux4_32
+
+.ends
+
+.include "lab6basicblock.jsim"

@@ -1,0 +1,101 @@
+* ROM Contents that need to be filled with real signals
+* 24, 25,
+* 32, 33, 36, 37, 38,
+* 40, 41, 42, 44, 45, 46,
+* 48, 49, 52, 53, 54,
+* 56, 57, 58, 60, 61, 62
+
+
+
+.subckt ctl reset id[31:26] ra2sel bsel alufn[5:0] wdsel[1:0] werf moe wr
+
+
+
+
+    Xctl vdd 0 0 id[31:26]    // one read port
+    + pcsel[2:0] wasel asel ra2sel bsel alufn[5:0] wdsel[1:0] werf moe xwr
+    + $memory width=18 nlocations=64 contents=(
+
+    + 0b000000000000000000 //  0  opcode=000000  NOP
+    + 0b000000000000000000 //  1  opcode=000001  NOP
+    + 0b000000000000000000 //  2  opcode=000010  NOP
+    + 0b000000000000000000 //  3  opcode=000011  NOP
+    + 0b000000000000000000 //  4  opcode=000100  NOP
+    + 0b000000000000000000 //  5  opcode=000101  NOP
+    + 0b000000000000000000 //  6  opcode=000110  NOP
+    + 0b000000000000000000 //  7  opcode=000111  NOP
+
+    + 0b000000000000000000 //  8  opcode=001000  NOP
+    + 0b000000000000000000 //  9  opcode=001001  NOP
+    + 0b000000000000000000 // 10  opcode=001010  NOP
+    + 0b000000000000000000 // 11  opcode=001011  NOP
+    + 0b000000000000000000 // 12  opcode=001100  NOP
+    + 0b000000000000000000 // 13  opcode=001101  NOP
+    + 0b000000000000000000 // 14  opcode=001110  NOP
+    + 0b000000000000000000 // 15  opcode=001111  NOP
+
+    + 0b000000000000000000 // 16  opcode=010000  NOP
+    + 0b000000000000000000 // 17  opcode=010001  NOP
+    + 0b000000000000000000 // 18  opcode=010010  NOP
+    + 0b000000000000000000 // 19  opcode=010011  NOP
+    + 0b000000000000000000 // 20  opcode=010100  NOP
+    + 0b000000000000000000 // 21  opcode=010101  NOP
+    + 0b000000000000000000 // 22  opcode=010110  NOP
+    + 0b000000000000000000 // 23  opcode=010111  NOP
+
+    // ST ALFUN = ADD BSEL = 1 RA2SEL = D/C
+
+    + 0b000000100000010110 // 24  opcode=011000  LD
+    + 0b000001100000000001 // 25  opcode=011001  ST
+    + 0b000000000000000000 // 26  opcode=011010  NOP
+    + 0b000000000000000000 // 27  opcode=011011  NOP (JMP)
+    + 0b000000000000000000 // 28  opcode=011100  NOP (BEQ)
+    + 0b000000000000000000 // 29  opcode=011101  NOP (BNE)
+    + 0b000000000000000000 // 30  opcode=011110  NOP
+    + 0b000000000000000000 // 31  opcode=011111  NOP (LDR)
+
+    + 0b000000000000001100 // 32  opcode=100000  ADD
+    + 0b000000000000101100 // 33  opcode=100001  SUB
+    + 0b000000000000000000 // 34  opcode=100010  NOP (MUL*)
+    + 0b000000000000000000 // 35  opcode=100011  NOP (DIV*)
+    + 0b000000011001101100 // 36  opcode=100100  CMPEQ
+    + 0b000000011010101100 // 37  opcode=100101  CMPLT
+    + 0b000000011011101100 // 38  opcode=100110  CMPLE
+    + 0b000000000000000000 // 39  opcode=100111  NOP
+
+    + 0b000000001100001100 // 40  opcode=101000  AND
+    + 0b000000001111001100 // 41  opcode=101001  OR
+    + 0b000000001011001100 // 42  opcode=101010  XOR
+    + 0b000000000000000000 // 43  opcode=101011  NOP (XNOR)
+    + 0b000000010000001100 // 44  opcode=101100  SHL
+    + 0b000000010000101100 // 45  opcode=101101  SHR
+    + 0b000000010001101100 // 46  opcode=101110  SRA
+    + 0b000000000000000000 // 47  opcode=101111  NOP
+
+    + 0b000000100000001100 // 48  opcode=110000  ADDC
+    + 0b000000100000101100 // 49  opcode=110001  SUBC
+    + 0b000000000000000000 // 50  opcode=110010  NOP (MULC*)
+    + 0b000000000000000000 // 51  opcode=110011  NOP (DIVC*)
+    + 0b000000111001101100 // 52  opcode=110100  CMPEQC
+    + 0b000000111010101100 // 53  opcode=110101  CMPLTC
+    + 0b000000111011101100 // 54  opcode=110110  CMPLEC
+    + 0b000000000000000000 // 55  opcode=110111  NOP
+
+    + 0b000000101100001100 // 56  opcode=111000  ANDC
+    + 0b000000101111001100 // 57  opcode=111001  ORC
+    + 0b000000101011001100 // 58  opcode=111010  XORC
+    + 0b000000000000000000 // 59  opcode=111011  NOP (XNORC)
+    + 0b000000110000001100 // 60  opcode=111100  SHLC
+    + 0b000000110000101100 // 61  opcode=111101  SHRC
+    + 0b000000110001101100 // 62  opcode=111110  SRAC
+    + 0b000000000000000000 // 63  opcode=111111  NOP
+
+    + )
+
+    * Invert reset
+    Xinv_reset reset nreset inverter
+
+    * AND xwr with ~reset to produce wr
+    Xand_wr xwr nreset wr and2
+
+.ends

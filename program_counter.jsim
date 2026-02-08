@@ -1,0 +1,257 @@
+* Main PC subcircuit
+* Inputs: clk (clock), reset (reset signal)
+* Output: ia[31:0] (instruction address / PC value)
+.subckt pc clk reset ia[31:0] pc_plus4_out[31:0]
+
+
+    * Constant zero
+    Xzero0  zero[0]  constant0
+    Xzero1  zero[1]  constant0
+    Xzero2  zero[2]  constant0
+    Xzero3  zero[3]  constant0
+    Xzero4  zero[4]  constant0
+    Xzero5  zero[5]  constant0
+    Xzero6  zero[6]  constant0
+    Xzero7  zero[7]  constant0
+    Xzero8  zero[8]  constant0
+    Xzero9  zero[9]  constant0
+    Xzero10 zero[10] constant0
+    Xzero11 zero[11] constant0
+    Xzero12 zero[12] constant0
+    Xzero13 zero[13] constant0
+    Xzero14 zero[14] constant0
+    Xzero15 zero[15] constant0
+    Xzero16 zero[16] constant0
+    Xzero17 zero[17] constant0
+    Xzero18 zero[18] constant0
+    Xzero19 zero[19] constant0
+    Xzero20 zero[20] constant0
+    Xzero21 zero[21] constant0
+    Xzero22 zero[22] constant0
+    Xzero23 zero[23] constant0
+    Xzero24 zero[24] constant0
+    Xzero25 zero[25] constant0
+    Xzero26 zero[26] constant0
+    Xzero27 zero[27] constant0
+    Xzero28 zero[28] constant0
+    Xzero29 zero[29] constant0
+    Xzero30 zero[30] constant0
+    Xzero31 zero[31] constant0
+
+    * compute PC+4
+    Xinc pc[31:0] pc_plus4[31:0] inc32
+
+    * Reset mux: 32-bit version using 1-bit mux2
+    Xmux0  reset pc_plus4[0]  zero[0]  pc_next[0]  mux2
+    Xmux1  reset pc_plus4[1]  zero[1]  pc_next[1]  mux2
+    Xmux2  reset pc_plus4[2]  zero[2]  pc_next[2]  mux2
+    Xmux3  reset pc_plus4[3]  zero[3]  pc_next[3]  mux2
+    Xmux4  reset pc_plus4[4]  zero[4]  pc_next[4]  mux2
+    Xmux5  reset pc_plus4[5]  zero[5]  pc_next[5]  mux2
+    Xmux6  reset pc_plus4[6]  zero[6]  pc_next[6]  mux2
+    Xmux7  reset pc_plus4[7]  zero[7]  pc_next[7]  mux2
+    Xmux8  reset pc_plus4[8]  zero[8]  pc_next[8]  mux2
+    Xmux9  reset pc_plus4[9]  zero[9]  pc_next[9]  mux2
+    Xmux10 reset pc_plus4[10] zero[10] pc_next[10] mux2
+    Xmux11 reset pc_plus4[11] zero[11] pc_next[11] mux2
+    Xmux12 reset pc_plus4[12] zero[12] pc_next[12] mux2
+    Xmux13 reset pc_plus4[13] zero[13] pc_next[13] mux2
+    Xmux14 reset pc_plus4[14] zero[14] pc_next[14] mux2
+    Xmux15 reset pc_plus4[15] zero[15] pc_next[15] mux2
+    Xmux16 reset pc_plus4[16] zero[16] pc_next[16] mux2
+    Xmux17 reset pc_plus4[17] zero[17] pc_next[17] mux2
+    Xmux18 reset pc_plus4[18] zero[18] pc_next[18] mux2
+    Xmux19 reset pc_plus4[19] zero[19] pc_next[19] mux2
+    Xmux20 reset pc_plus4[20] zero[20] pc_next[20] mux2
+    Xmux21 reset pc_plus4[21] zero[21] pc_next[21] mux2
+    Xmux22 reset pc_plus4[22] zero[22] pc_next[22] mux2
+    Xmux23 reset pc_plus4[23] zero[23] pc_next[23] mux2
+    Xmux24 reset pc_plus4[24] zero[24] pc_next[24] mux2
+    Xmux25 reset pc_plus4[25] zero[25] pc_next[25] mux2
+    Xmux26 reset pc_plus4[26] zero[26] pc_next[26] mux2
+    Xmux27 reset pc_plus4[27] zero[27] pc_next[27] mux2
+    Xmux28 reset pc_plus4[28] zero[28] pc_next[28] mux2
+    Xmux29 reset pc_plus4[29] zero[29] pc_next[29] mux2
+    Xmux30 reset pc_plus4[30] zero[30] pc_next[30] mux2
+    Xmux31 reset pc_plus4[31] zero[31] pc_next[31] mux2
+
+    * PC register
+    Xreg pc_next[31:0] clk#32 pc[31:0] dreg
+
+    * Expose PC as instruction address (32-bit bus)
+    Xbuf0  pc[0]  ia[0]  buffer
+    Xbuf1  pc[1]  ia[1]  buffer
+    Xbuf2  pc[2]  ia[2]  buffer
+    Xbuf3  pc[3]  ia[3]  buffer
+    Xbuf4  pc[4]  ia[4]  buffer
+    Xbuf5  pc[5]  ia[5]  buffer
+    Xbuf6  pc[6]  ia[6]  buffer
+    Xbuf7  pc[7]  ia[7]  buffer
+    Xbuf8  pc[8]  ia[8]  buffer
+    Xbuf9  pc[9]  ia[9]  buffer
+    Xbuf10 pc[10] ia[10] buffer
+    Xbuf11 pc[11] ia[11] buffer
+    Xbuf12 pc[12] ia[12] buffer
+    Xbuf13 pc[13] ia[13] buffer
+    Xbuf14 pc[14] ia[14] buffer
+    Xbuf15 pc[15] ia[15] buffer
+    Xbuf16 pc[16] ia[16] buffer
+    Xbuf17 pc[17] ia[17] buffer
+    Xbuf18 pc[18] ia[18] buffer
+    Xbuf19 pc[19] ia[19] buffer
+    Xbuf20 pc[20] ia[20] buffer
+    Xbuf21 pc[21] ia[21] buffer
+    Xbuf22 pc[22] ia[22] buffer
+    Xbuf23 pc[23] ia[23] buffer
+    Xbuf24 pc[24] ia[24] buffer
+    Xbuf25 pc[25] ia[25] buffer
+    Xbuf26 pc[26] ia[26] buffer
+    Xbuf27 pc[27] ia[27] buffer
+    Xbuf28 pc[28] ia[28] buffer
+    Xbuf29 pc[29] ia[29] buffer
+    Xbuf30 pc[30] ia[30] buffer
+    Xbuf31 pc[31] ia[31] buffer
+
+    * Expose PC+4 as output bus
+    Xbufp40  pc_plus4[0]  pc_plus4_out[0]  buffer
+    Xbufp41  pc_plus4[1]  pc_plus4_out[1]  buffer
+    Xbufp42  pc_plus4[2]  pc_plus4_out[2]  buffer
+    Xbufp43  pc_plus4[3]  pc_plus4_out[3]  buffer
+    Xbufp44  pc_plus4[4]  pc_plus4_out[4]  buffer
+    Xbufp45  pc_plus4[5]  pc_plus4_out[5]  buffer
+    Xbufp46  pc_plus4[6]  pc_plus4_out[6]  buffer
+    Xbufp47  pc_plus4[7]  pc_plus4_out[7]  buffer
+    Xbufp48  pc_plus4[8]  pc_plus4_out[8]  buffer
+    Xbufp49  pc_plus4[9]  pc_plus4_out[9]  buffer
+    Xbufp410 pc_plus4[10] pc_plus4_out[10] buffer
+    Xbufp411 pc_plus4[11] pc_plus4_out[11] buffer
+    Xbufp412 pc_plus4[12] pc_plus4_out[12] buffer
+    Xbufp413 pc_plus4[13] pc_plus4_out[13] buffer
+    Xbufp414 pc_plus4[14] pc_plus4_out[14] buffer
+    Xbufp415 pc_plus4[15] pc_plus4_out[15] buffer
+    Xbufp416 pc_plus4[16] pc_plus4_out[16] buffer
+    Xbufp417 pc_plus4[17] pc_plus4_out[17] buffer
+    Xbufp418 pc_plus4[18] pc_plus4_out[18] buffer
+    Xbufp419 pc_plus4[19] pc_plus4_out[19] buffer
+    Xbufp420 pc_plus4[20] pc_plus4_out[20] buffer
+    Xbufp421 pc_plus4[21] pc_plus4_out[21] buffer
+    Xbufp422 pc_plus4[22] pc_plus4_out[22] buffer
+    Xbufp423 pc_plus4[23] pc_plus4_out[23] buffer
+    Xbufp424 pc_plus4[24] pc_plus4_out[24] buffer
+    Xbufp425 pc_plus4[25] pc_plus4_out[25] buffer
+    Xbufp426 pc_plus4[26] pc_plus4_out[26] buffer
+    Xbufp427 pc_plus4[27] pc_plus4_out[27] buffer
+    Xbufp428 pc_plus4[28] pc_plus4_out[28] buffer
+    Xbufp429 pc_plus4[29] pc_plus4_out[29] buffer
+    Xbufp430 pc_plus4[30] pc_plus4_out[30] buffer
+    Xbufp431 pc_plus4[31] pc_plus4_out[31] buffer
+
+
+.ends
+
+* PC + 4 Incrementer
+* Inputs: pc[31:0]
+* Outputs: pc_plus4[31:0]
+.subckt inc32 pc[31:0] pc_plus4[31:0]
+
+    * Create constant 1 node
+    Xone one constant1
+
+    * Bottom two bits are always 0 (PC is word-aligned)
+    .connect pc_plus4[0] 0
+    .connect pc_plus4[1] 0
+
+    * Bit 2: LSB of +4
+    Xxor2_2 pc[2] one pc_plus4[2] xor2
+    Xand2_2 pc[2] one c2 and2
+
+    * Bits 3..31: ripple carry
+    Xxor3 pc[3] c2 pc_plus4[3] xor2
+    Xand3 pc[3] c2 c3 and2
+
+    Xxor4 pc[4] c3 pc_plus4[4] xor2
+    Xand4 pc[4] c3 c4 and2
+
+    Xxor5 pc[5] c4 pc_plus4[5] xor2
+    Xand5 pc[5] c4 c5 and2
+
+    Xxor6 pc[6] c5 pc_plus4[6] xor2
+    Xand6 pc[6] c5 c6 and2
+
+    Xxor7 pc[7] c6 pc_plus4[7] xor2
+    Xand7 pc[7] c6 c7 and2
+
+    Xxor8 pc[8] c7 pc_plus4[8] xor2
+    Xand8 pc[8] c7 c8 and2
+
+    Xxor9 pc[9] c8 pc_plus4[9] xor2
+    Xand9 pc[9] c8 c9 and2
+
+    Xxor10 pc[10] c9 pc_plus4[10] xor2
+    Xand10 pc[10] c9 c10 and2
+
+    Xxor11 pc[11] c10 pc_plus4[11] xor2
+    Xand11 pc[11] c10 c11 and2
+
+    Xxor12 pc[12] c11 pc_plus4[12] xor2
+    Xand12 pc[12] c11 c12 and2
+
+    Xxor13 pc[13] c12 pc_plus4[13] xor2
+    Xand13 pc[13] c12 c13 and2
+
+    Xxor14 pc[14] c13 pc_plus4[14] xor2
+    Xand14 pc[14] c13 c14 and2
+
+    Xxor15 pc[15] c14 pc_plus4[15] xor2
+    Xand15 pc[15] c14 c15 and2
+
+    Xxor16 pc[16] c15 pc_plus4[16] xor2
+    Xand16 pc[16] c15 c16 and2
+
+    Xxor17 pc[17] c16 pc_plus4[17] xor2
+    Xand17 pc[17] c16 c17 and2
+
+    Xxor18 pc[18] c17 pc_plus4[18] xor2
+    Xand18 pc[18] c17 c18 and2
+
+    Xxor19 pc[19] c18 pc_plus4[19] xor2
+    Xand19 pc[19] c18 c19 and2
+
+    Xxor20 pc[20] c19 pc_plus4[20] xor2
+    Xand20 pc[20] c19 c20 and2
+
+    Xxor21 pc[21] c20 pc_plus4[21] xor2
+    Xand21 pc[21] c20 c21 and2
+
+    Xxor22 pc[22] c21 pc_plus4[22] xor2
+    Xand22 pc[22] c21 c22 and2
+
+    Xxor23 pc[23] c22 pc_plus4[23] xor2
+    Xand23 pc[23] c22 c23 and2
+
+    Xxor24 pc[24] c23 pc_plus4[24] xor2
+    Xand24 pc[24] c23 c24 and2
+
+    Xxor25 pc[25] c24 pc_plus4[25] xor2
+    Xand25 pc[25] c24 c25 and2
+
+    Xxor26 pc[26] c25 pc_plus4[26] xor2
+    Xand26 pc[26] c25 c26 and2
+
+    Xxor27 pc[27] c26 pc_plus4[27] xor2
+    Xand27 pc[27] c26 c27 and2
+
+    Xxor28 pc[28] c27 pc_plus4[28] xor2
+    Xand28 pc[28] c27 c28 and2
+
+    Xxor29 pc[29] c28 pc_plus4[29] xor2
+    Xand29 pc[29] c28 c29 and2
+
+    Xxor30 pc[30] c29 pc_plus4[30] xor2
+    Xand30 pc[30] c29 c30 and2
+
+    Xxor31 pc[31] c30 pc_plus4[31] xor2
+    * c31 is carry out, unused
+    .connect c31 0
+
+.ends

@@ -1,0 +1,108 @@
+
+.subckt regfile clk werf ra2sel ra[4:0] rb[4:0] rc[4:0]
++ wdata[31:0] radata[31:0] rbdata[31:0]
+
+    * RA2SEL mux: 32-bit version using 1-bit mux2
+    Xmux0  ra2sel rb[0]  rc[0]  ra2_input[0]  mux2
+    Xmux1  ra2sel rb[1]  rc[1]  ra2_input[1]  mux2
+    Xmux2  ra2sel rb[2]  rc[2]  ra2_input[2]  mux2
+    Xmux3  ra2sel rb[3]  rc[3]  ra2_input[3]  mux2
+    Xmux4  ra2sel rb[4]  rc[4]  ra2_input[4]  mux2
+
+    * check for r31 read / writes
+    Xchecka ra[4:0] is_ra1_input_31 checkreg
+
+    * check output of ra2sel mux, rather than b explicitly
+    Xcheckb ra2_input[4:0] is_ra2_input_31 checkreg
+
+    Xcheckc rc[4:0] is_wa_input_31 checkreg
+
+    Xregfile
+    + vdd 0 0 ra[4:0] mem_radata[31:0] // A read port
+    + vdd 0 0 ra2_input[4:0] mem_rbdata[31:0] // B read port
+    + 0 clk werf rc[4:0] wdata[31:0] // write port
+    + $memory width=32 nlocations=31
+
+    * Invert R31 detect signals
+    XinvA is_ra1_input_31 not_ra1_31 inverter
+    XinvB is_ra2_input_31 not_ra2_31 inverter
+
+    * Port A read data gating (force R31 to zero)
+    XandA0  mem_radata[0]  not_ra1_31 radata[0]  and2
+    XandA1  mem_radata[1]  not_ra1_31 radata[1]  and2
+    XandA2  mem_radata[2]  not_ra1_31 radata[2]  and2
+    XandA3  mem_radata[3]  not_ra1_31 radata[3]  and2
+    XandA4  mem_radata[4]  not_ra1_31 radata[4]  and2
+    XandA5  mem_radata[5]  not_ra1_31 radata[5]  and2
+    XandA6  mem_radata[6]  not_ra1_31 radata[6]  and2
+    XandA7  mem_radata[7]  not_ra1_31 radata[7]  and2
+    XandA8  mem_radata[8]  not_ra1_31 radata[8]  and2
+    XandA9  mem_radata[9]  not_ra1_31 radata[9]  and2
+    XandA10 mem_radata[10] not_ra1_31 radata[10] and2
+    XandA11 mem_radata[11] not_ra1_31 radata[11] and2
+    XandA12 mem_radata[12] not_ra1_31 radata[12] and2
+    XandA13 mem_radata[13] not_ra1_31 radata[13] and2
+    XandA14 mem_radata[14] not_ra1_31 radata[14] and2
+    XandA15 mem_radata[15] not_ra1_31 radata[15] and2
+    XandA16 mem_radata[16] not_ra1_31 radata[16] and2
+    XandA17 mem_radata[17] not_ra1_31 radata[17] and2
+    XandA18 mem_radata[18] not_ra1_31 radata[18] and2
+    XandA19 mem_radata[19] not_ra1_31 radata[19] and2
+    XandA20 mem_radata[20] not_ra1_31 radata[20] and2
+    XandA21 mem_radata[21] not_ra1_31 radata[21] and2
+    XandA22 mem_radata[22] not_ra1_31 radata[22] and2
+    XandA23 mem_radata[23] not_ra1_31 radata[23] and2
+    XandA24 mem_radata[24] not_ra1_31 radata[24] and2
+    XandA25 mem_radata[25] not_ra1_31 radata[25] and2
+    XandA26 mem_radata[26] not_ra1_31 radata[26] and2
+    XandA27 mem_radata[27] not_ra1_31 radata[27] and2
+    XandA28 mem_radata[28] not_ra1_31 radata[28] and2
+    XandA29 mem_radata[29] not_ra1_31 radata[29] and2
+    XandA30 mem_radata[30] not_ra1_31 radata[30] and2
+    XandA31 mem_radata[31] not_ra1_31 radata[31] and2
+
+
+    * Port B read data gating (force R31 to zero)
+    XandB0  mem_rbdata[0]  not_ra2_31 rbdata[0]  and2
+    XandB1  mem_rbdata[1]  not_ra2_31 rbdata[1]  and2
+    XandB2  mem_rbdata[2]  not_ra2_31 rbdata[2]  and2
+    XandB3  mem_rbdata[3]  not_ra2_31 rbdata[3]  and2
+    XandB4  mem_rbdata[4]  not_ra2_31 rbdata[4]  and2
+    XandB5  mem_rbdata[5]  not_ra2_31 rbdata[5]  and2
+    XandB6  mem_rbdata[6]  not_ra2_31 rbdata[6]  and2
+    XandB7  mem_rbdata[7]  not_ra2_31 rbdata[7]  and2
+    XandB8  mem_rbdata[8]  not_ra2_31 rbdata[8]  and2
+    XandB9  mem_rbdata[9]  not_ra2_31 rbdata[9]  and2
+    XandB10 mem_rbdata[10] not_ra2_31 rbdata[10] and2
+    XandB11 mem_rbdata[11] not_ra2_31 rbdata[11] and2
+    XandB12 mem_rbdata[12] not_ra2_31 rbdata[12] and2
+    XandB13 mem_rbdata[13] not_ra2_31 rbdata[13] and2
+    XandB14 mem_rbdata[14] not_ra2_31 rbdata[14] and2
+    XandB15 mem_rbdata[15] not_ra2_31 rbdata[15] and2
+    XandB16 mem_rbdata[16] not_ra2_31 rbdata[16] and2
+    XandB17 mem_rbdata[17] not_ra2_31 rbdata[17] and2
+    XandB18 mem_rbdata[18] not_ra2_31 rbdata[18] and2
+    XandB19 mem_rbdata[19] not_ra2_31 rbdata[19] and2
+    XandB20 mem_rbdata[20] not_ra2_31 rbdata[20] and2
+    XandB21 mem_rbdata[21] not_ra2_31 rbdata[21] and2
+    XandB22 mem_rbdata[22] not_ra2_31 rbdata[22] and2
+    XandB23 mem_rbdata[23] not_ra2_31 rbdata[23] and2
+    XandB24 mem_rbdata[24] not_ra2_31 rbdata[24] and2
+    XandB25 mem_rbdata[25] not_ra2_31 rbdata[25] and2
+    XandB26 mem_rbdata[26] not_ra2_31 rbdata[26] and2
+    XandB27 mem_rbdata[27] not_ra2_31 rbdata[27] and2
+    XandB28 mem_rbdata[28] not_ra2_31 rbdata[28] and2
+    XandB29 mem_rbdata[29] not_ra2_31 rbdata[29] and2
+    XandB30 mem_rbdata[30] not_ra2_31 rbdata[30] and2
+    XandB31 mem_rbdata[31] not_ra2_31 rbdata[31] and2
+
+.ends
+
+
+.subckt checkreg addr[4:0] is_r31
+
+    Xand0 addr[4] addr[3] addr[2] addr_hi and3
+    Xand1 addr[1] addr[0] addr_lo and2
+    Xand2 addr_hi addr_lo is_r31 and2
+
+.ends

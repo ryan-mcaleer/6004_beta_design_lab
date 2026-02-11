@@ -1,17 +1,4 @@
-* ROM Contents that need to be filled with real signals
-* 24, 25,
-* 32, 33, 36, 37, 38,
-* 40, 41, 42, 44, 45, 46,
-* 48, 49, 52, 53, 54,
-* 56, 57, 58, 60, 61, 62
-
-
-
 .subckt ctl reset id[31:26] ra2sel bsel alufn[5:0] wdsel[1:0] werf moe wr
-
-
-
-
     Xctl vdd 0 0 id[31:26]    // one read port
     + pcsel[2:0] wasel asel ra2sel bsel alufn[5:0] wdsel[1:0] werf moe xwr
     + $memory width=18 nlocations=64 contents=(
@@ -42,8 +29,6 @@
     + 0b000000000000000000 // 21  opcode=010101  NOP
     + 0b000000000000000000 // 22  opcode=010110  NOP
     + 0b000000000000000000 // 23  opcode=010111  NOP
-
-    // ST ALFUN = ADD BSEL = 1 RA2SEL = D/C
 
     + 0b000000100000010110 // 24  opcode=011000  LD
     + 0b000001100000000001 // 25  opcode=011001  ST
@@ -89,7 +74,6 @@
     + 0b000000110000101100 // 61  opcode=111101  SHRC
     + 0b000000110001101100 // 62  opcode=111110  SRAC
     + 0b000000000000000000 // 63  opcode=111111  NOP
-
     + )
 
     * Invert reset
